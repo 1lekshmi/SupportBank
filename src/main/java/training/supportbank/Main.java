@@ -65,8 +65,8 @@ public class Main {
 
 
         Scanner input = new Scanner(System.in);
-        System.out.println("If you want to list all the accounts, enter \"List All \".");
-        System.out.println("If you want account details on a certain account, enter \"List <name>\" and replace <name> with the name of the account holder. " );
+        System.out.println("If you want to list all the accounts, enter \"List All\".");
+        System.out.println("If you want transaction details on a certain account, enter \"List <name>\" and replace <name> with the name of the account holder. " );
         String command = WordUtils.capitalizeFully(input.nextLine());
 
 //
@@ -74,21 +74,22 @@ public class Main {
             for (String accName:distinctNames) {
                 Accounts newAcc = new Accounts(accName);
                 Double bal = newAcc.getBalance();
-                DecimalFormat df = new DecimalFormat("####0.00");
+                DecimalFormat df = new DecimalFormat("0.00");
                 System.out.println(accName + ": " + df.format(bal));
-
             }
 
 
         } else {
             //extracting the name entered
             String inputtedName = command.substring(4);
-            allTransactions(listOfTransactions, inputtedName);
+            getAllTransactions(listOfTransactions, inputtedName);
 
     }
 }
 
-    private static void allTransactions(List<Transactions> listOfTransactions, String inputtedName) {
-        listOfTransactions.stream().filter(transaction-> transaction.from.equals(inputtedName) || transaction.to.equals(inputtedName)).map(Transactions::allTransactions).forEach(System.out::println);
+    private static void getAllTransactions(List<Transactions> listOfTransactions, String inputtedName) {
+        listOfTransactions.stream().filter(transaction-> transaction.from.equals(inputtedName) || transaction.to.equals(inputtedName))
+                .map(Transactions::allTransactions)
+                .forEach(System.out::println);
     }
     }
