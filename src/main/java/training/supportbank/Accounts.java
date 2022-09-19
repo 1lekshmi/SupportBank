@@ -6,18 +6,16 @@ import com.opencsv.exceptions.CsvException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Accounts {
+public class Accounts{
     String name;
-
     Double balance;
-
     Double moneyAdded = 0.00;
-
     Double moneyRemoved = 0.00;
 
 //    static void main(String[] args)
@@ -27,7 +25,7 @@ public class Accounts {
         this.name = name;
 
 //        created a string variable for path
-        String path = "/Users/lsudhiku/Work/SupportBankCsvFile/Transactions2014.csv";
+        String path = "/Users/lsudhiku/Work/Training/SupportBank/SupportBankCsvFile/Transactions2014.csv";
         CSVReader csv = new CSVReader(new FileReader(path));
         csv.skip(1);
 
@@ -51,34 +49,27 @@ public class Accounts {
 //            changing the type for the 'amount' variable
             Double amountdp = Double.parseDouble(amount);
 
-
-
             accountHolderName.add(from);
 
             if(from.equals(name)){
-
-                double moneyAdded = this.moneyAdded + amountdp;
+                moneyRemoved = this.moneyRemoved - amountdp;
 
             } else if (to.equals(name)) {
-                double moneyRemoved = this.moneyRemoved - amountdp;
+                moneyAdded = this.moneyAdded + amountdp;
             }
+            balance = moneyAdded + moneyRemoved;
 
-            this.balance = moneyAdded + moneyRemoved;
         }
-
-//        a new list for the distinct names
-        List<String > distinctNames = accountHolderName.stream()
-                .distinct()
-                .collect(Collectors.toList());
-//        System.out.println(distinctNames);
 
     }
 
 // methods
 
     public Double getBalance(){
+
         return balance;
     }
+
 
 }
 
